@@ -1,0 +1,8 @@
+[run]
+source =
+    src/*
+omit =
+    tests/*
+
+[xml]
+output = reports/coverage.xml

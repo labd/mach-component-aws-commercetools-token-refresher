@@ -1,0 +1,62 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - master
+
+env:
+  PACKAGE_NAME: commercetools_token_refresher
+  AWS_BUCKET_NAME: public-mach-components
+
+jobs:
+  deploy:
+    name: Build and deploy component
+    runs-on: ubuntu-latest
+    steps:
+      - name: Prepare
+        id: prep
+        run: |
+          echo "::set-output name=artifact::$(echo $PACKAGE_NAME-${GITHUB_SHA:0:7}.zip)"
+          echo "::set-output name=version::$(echo $PACKAGE_NAME@${GITHUB_SHA:0:7})"
+      - name: Check out the repo
+        uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Install dependencies
+        run: |
+          python -m pip install -U pip
+          python -m pip install wheel
+          python -m pip install -e .[test]
+      - name: Lint
+        run: |
+          flake8 src tests
+      - name: Test
+        run: py.test tests/ --cov=commercetools_token_refresher --cov-report=xml --cov-report=term-missing --junit-xml=reports/junit.xml --cov-fail-under=${{ env.MIN_COVERAGE }}
+        env:
+          CI: 1
+          MIN_COVERAGE: 30
+      - name: Build
+        run: |
+          python3 setup.py sdist bdist_wheel
+          python3 -m pip install dist/*.whl -t ./build
+          cp handler.py ./build
+      - name: Clean
+        run: |
+          find . -name '*.pyc' -delete
+          find . -name '__pycache__' -delete
+          find . -name '*.egg-info' | xargs rm -rf
+      - name: Archive
+        run: |
+          echo "zip content of build to ${{ steps.prep.outputs.artifact }}"
+          cd ./build && zip -9 -r ${{ steps.prep.outputs.artifact }} .
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-central-1
+      - name: Upload
+        run: aws s3 cp --acl public-read build/${{ steps.prep.outputs.artifact }} s3://${{ env.AWS_BUCKET_NAME }}/
