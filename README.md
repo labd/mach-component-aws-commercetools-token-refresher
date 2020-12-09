@@ -12,11 +12,11 @@ Use the following attributes to configure this component in MACH:
 sites:
   - identifier: some site
     components:
-    - name: rotator
+    - name: ct-refresher
 ...
 
 components:
-- name: rotator
+- name: ct-refresher
   source: git::https://github.com/labd/mach-component-aws-commercetools-token-refresher.git//terraform
   version: <git hash of version you want to release>
   integrations: ["aws", "commercetools", "sentry"]
