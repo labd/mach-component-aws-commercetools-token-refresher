@@ -38,11 +38,9 @@ def handle(event, context):
         'access_token': ,
     }
 
-    And the following tags:
+    And the following tag:
 
-    - lambda (name of the lambda to have access to this secret)
-    - sm_client_arn, arn of the secret which contains client id and secret
-    - sm_client_scopes, comma separated list of scopes for the existing client.
+    - sm_client_arn: ARN of the secret which contains client id and secret
 
     Args:
         event (dict): Lambda dictionary of event parameters. These keys must include the following:

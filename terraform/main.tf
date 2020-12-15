@@ -28,8 +28,8 @@ resource "aws_lambda_function" "commercetools_token_refresher" {
   timeout     = 30
   memory_size = 128
 
-  s3_bucket   = "public-mach-components"
-  s3_key      = "commercetools_token_refresher-${var.component_version}.zip"
+  s3_bucket = "public-mach-components"
+  s3_key    = "commercetools_token_refresher-${var.component_version}.zip"
 
   tracing_config {
     mode = "Active"
