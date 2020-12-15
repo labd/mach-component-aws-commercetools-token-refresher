@@ -3,7 +3,7 @@ name: Deploy
 on:
   push:
     branches:
-      - master
+      - "*"
 
 env:
   PACKAGE_NAME: commercetools_token_refresher

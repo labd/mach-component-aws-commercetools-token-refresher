@@ -40,9 +40,9 @@ class TokenRotator:
             raise ValueError("Secret %s has no tags" % arn)
 
         tags = [tag["Key"] for tag in metadata["Tags"]]
-        if sorted(tags) != ["lambda", "sm_client_arn", "sm_client_scopes"]:
-            logger.error("Secret %s has missing tags, got tags: %s", arn, tags)
-            raise ValueError("Secret %s has missing tags" % arn)
+        if "sm_client_arn" not in tags:
+            logger.error("Secret %s is missing required 'sm_client_arn' tag", arn)
+            raise ValueError("Secret %s is missing required 'sm_client_arn' tag" % arn)
 
         if not metadata["RotationEnabled"]:
             logger.error("Secret %s is not enabled for rotation", arn)
@@ -166,16 +166,16 @@ class TokenRotator:
         """
         # Make sure the current secret exists and try to get the master arn from the secret
         client_credentials_secret_arn = self.get_tag("sm_client_arn")
-        client_scopes = self.get_tag("sm_client_scopes")
 
         client_data = get_secret_dict(
             self.service_client, client_credentials_secret_arn, "AWSCURRENT"
         )
         ct_client_id = client_data["client_id"]
         ct_client_secret = client_data["client_secret"]
+        client_scopes = client_data["sm_client_scopes"]
 
         logger.info(
-            "Creating new token with scope %s for client id %s",
+            "Creating new token with scopes %s for client id %s",
             client_scopes,
             ct_client_id,
         )
