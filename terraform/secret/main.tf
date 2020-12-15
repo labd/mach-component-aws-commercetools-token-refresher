@@ -2,6 +2,7 @@ locals {
   commercetools_secret = {
     client_id     = commercetools_api_client.main.id
     client_secret = commercetools_api_client.main.secret
+    client_scopes = var.scopes
   }
 }
 
@@ -31,8 +32,6 @@ resource "aws_secretsmanager_secret" "ct_access_token" {
   }
 
   tags = {
-    lambda           = var.name
     sm_client_arn    = aws_secretsmanager_secret.commercetools_client.arn
-    sm_client_scopes = join(" ", var.scopes)
   }
 }

@@ -19,23 +19,7 @@ def test_rotator_not_enabled_rotation():
     secrets_manager.create_secret(
         Name=secret_name,
         SecretString="{}",
-        Tags=[
-            {
-                "Key": "lambda",
-                "Value": "api_extensions",
-                # black supress format
-            },
-            {
-                "Key": "sm_client_scopes",
-                "Value": "manage_project:unittest manage_api_clients:unittest",
-                # black supress format
-            },
-            {
-                "Key": "sm_client_arn",
-                "Value": "some arn",
-                # black supress format
-            },
-        ],
+        Tags=[{"Key": "sm_client_arn", "Value": "some arn",},],
     )
 
     client_request_token = str(uuid.uuid4())
