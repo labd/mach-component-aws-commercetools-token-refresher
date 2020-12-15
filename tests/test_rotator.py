@@ -19,7 +19,7 @@ def test_rotator_not_enabled_rotation():
     secrets_manager.create_secret(
         Name=secret_name,
         SecretString="{}",
-        Tags=[{"Key": "sm_client_arn", "Value": "some arn",},],
+        Tags=[{"Key": "sm_client_arn", "Value": "some arn"}],
     )
 
     client_request_token = str(uuid.uuid4())
