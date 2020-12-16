@@ -172,7 +172,7 @@ class TokenRotator:
         )
         ct_client_id = client_data["client_id"]
         ct_client_secret = client_data["client_secret"]
-        client_scopes = client_data["client_scopes"]
+        client_scopes = " ".join(client_data["client_scopes"])
 
         logger.info(
             "Creating new token with scopes %s for client id %s",
