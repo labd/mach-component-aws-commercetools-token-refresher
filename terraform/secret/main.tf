@@ -32,6 +32,7 @@ resource "aws_secretsmanager_secret" "ct_access_token" {
   }
 
   tags = {
+    lambda           = var.name
     sm_client_arn    = aws_secretsmanager_secret.commercetools_client.arn
   }
 }
