@@ -21,6 +21,15 @@ resource "aws_secretsmanager_secret_version" "commercetools_client" {
 
 resource "aws_secretsmanager_secret" "ct_access_token" {
   name = "${var.name}/ct-access-token"
+  
+  tags = {
+    lambda           = var.name
+    sm_client_arn    = aws_secretsmanager_secret.commercetools_client.arn
+  }
+}
+
+resource "aws_secretsmanager_secret_rotation" "ct_access_token_rotation" {
+  secret_id           = aws_secretsmanager_secret.ct_access_token.id
   rotation_lambda_arn = replace(
     data.aws_lambda_function.commercetools_token_refresher.arn,
     ":$LATEST",
@@ -29,10 +38,5 @@ resource "aws_secretsmanager_secret" "ct_access_token" {
 
   rotation_rules {
     automatically_after_days = 1
-  }
-
-  tags = {
-    lambda           = var.name
-    sm_client_arn    = aws_secretsmanager_secret.commercetools_client.arn
   }
 }
