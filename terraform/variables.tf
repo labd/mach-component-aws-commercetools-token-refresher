@@ -14,6 +14,12 @@ variable "site" {
   description = "Identifier of the site."
 }
 
+variable "tags" {
+  type        = map(string)
+  description = "Tags to be used on resources."
+  default = {}
+}
+
 variable "ct_project_key" {
   type = string
 }
