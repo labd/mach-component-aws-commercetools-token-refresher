@@ -14,11 +14,6 @@ jobs:
     name: Build and deploy component
     runs-on: ubuntu-latest
     steps:
-      - name: Prepare
-        id: prep
-        run: |
-          echo "::set-output name=artifact::$(echo $PACKAGE_NAME-${GITHUB_SHA:0:7}.zip)"
-          echo "::set-output name=version::$(echo $PACKAGE_NAME@${GITHUB_SHA:0:7})"
       - name: Check out the repo
         uses: actions/checkout@v2
       - name: Setup Python
@@ -39,19 +34,7 @@ jobs:
           CI: 1
           MIN_COVERAGE: 30
       - name: Build
-        run: |
-          python3 setup.py sdist bdist_wheel
-          python3 -m pip install dist/*.whl -t ./build
-          cp handler.py ./build
-      - name: Clean
-        run: |
-          find . -name '*.pyc' -delete
-          find . -name '__pycache__' -delete
-          find . -name '*.egg-info' | xargs rm -rf
-      - name: Archive
-        run: |
-          echo "zip content of build to ${{ steps.prep.outputs.artifact }}"
-          cd ./build && zip -9 -r ${{ steps.prep.outputs.artifact }} .
+        run: ./build.sh package
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -59,4 +42,4 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-central-1
       - name: Upload
-        run: aws s3 cp --acl public-read build/${{ steps.prep.outputs.artifact }} s3://${{ env.AWS_BUCKET_NAME }}/
+        run: ./build.sh upload

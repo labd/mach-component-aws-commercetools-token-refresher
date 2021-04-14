@@ -1,6 +1,3 @@
-VERSION := $(shell git rev-parse --short HEAD 2>/dev/null || echo "dev" )
-HANDLER_NAME := "commercetools_token_refresher"
-NAME := $(HANDLER_NAME)-$(VERSION)
 WORKSPACE := $(shell pwd)
 MIN_COVERAGE := 30
 
@@ -39,22 +36,14 @@ flake8:
 
 .PHONY: build
 build: clean
-	python3 setup.py sdist bdist_wheel
-
-.PHONY: lambda-package
-lambda-package: build
-	python3 -m pip install dist/*.whl -t ./build
-	cp handler.py ./build
-	cd build && zip -9 -r $(NAME).zip .
+	./build.sh package
 
 .PHONY: clean
-clean: clean-lambda-package
+clean:
+	rm -rf $(WORKSPACE)/build/*
 	rm -rf $(WORKSPACE)/dist/
 	mkdir $(WORKSPACE)/dist/
-
-.PHONY: clean-lambda-package
-clean-lambda-package:
-	rm -rf $(WORKSPACE)/build/*
+	./build.sh clean
 
 .PHONY: requirements
 requirements:
