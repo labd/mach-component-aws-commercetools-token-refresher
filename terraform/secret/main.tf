@@ -21,10 +21,11 @@ resource "aws_secretsmanager_secret_version" "commercetools_client" {
 
 resource "aws_secretsmanager_secret" "ct_access_token" {
   name = "${var.name}/ct-access-token"
-  
+
   tags = {
-    lambda           = var.name
-    sm_client_arn    = aws_secretsmanager_secret.commercetools_client.arn
+    lambda        = var.name
+    sm_client_arn = aws_secretsmanager_secret.commercetools_client.arn
+    scope_hash    = sha256(join(":::", var.scopes))
   }
 }
 
