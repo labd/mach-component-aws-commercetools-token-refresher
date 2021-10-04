@@ -6,7 +6,7 @@ resource "aws_cloudwatch_event_rule" "scope_change" {
 {
   "source": ["aws.tag"],
   "detail-type": ["Tag Change on Resource"],
-  "resources": "arn:aws:secretsmanager:${local.aws_region_name}:${local.aws_account_id}:secret:"
+  "resources": ["arn:aws:secretsmanager:${local.aws_region_name}:${local.aws_account_id}:secret:"],
   "detail": {
     "changed-tag-keys": [ "scope_hash" ]
   }
