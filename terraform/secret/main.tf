@@ -26,11 +26,12 @@ resource "aws_secretsmanager_secret" "ct_access_token" {
     lambda        = var.name
     sm_client_arn = aws_secretsmanager_secret.commercetools_client.arn
     scope_hash    = sha256(join(":::", var.scopes))
+    site          = var.site
   }
 }
 
 resource "aws_secretsmanager_secret_rotation" "ct_access_token_rotation" {
-  secret_id           = aws_secretsmanager_secret.ct_access_token.id
+  secret_id = aws_secretsmanager_secret.ct_access_token.id
   rotation_lambda_arn = replace(
     data.aws_lambda_function.commercetools_token_refresher.arn,
     ":$LATEST",

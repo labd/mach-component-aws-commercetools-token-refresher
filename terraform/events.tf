@@ -1,5 +1,5 @@
 resource "aws_cloudwatch_event_rule" "scope_change" {
-  name        = "capture-tag-scope-hash-changes"
+  name        = "${var.site}-${local.component_name}-scope-change"
   description = "Capture each scope hash tag changes on secrets"
 
   event_pattern = <<EOF
@@ -7,7 +7,10 @@ resource "aws_cloudwatch_event_rule" "scope_change" {
   "source": ["aws.tag"],
   "detail-type": ["Tag Change on Resource"],
   "detail": {
-    "changed-tag-keys": [ "scope_hash" ]
+    "changed-tag-keys": [ "scope_hash" ],
+    "tags": {
+      "site": [ "${var.site}" ]
+    }
   }
 }
 EOF
