@@ -1,4 +1,12 @@
 import boto3
+import sys
+import logging
+import traceback
+import json
+
+
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
 
 client = boto3.client("secretsmanager")
 
@@ -27,7 +35,22 @@ def handle(event, context):
         }
     }
     """
+    logger.info(f'event: {event}')
+
     for resource in event["resources"]:
-        print(f"rotating: {resource}")
-        response = client.rotate_secret(SecretId=resource)
-        print(response)
+        logger.info(f"rotating resource: {resource}")
+
+        try:
+            response = client.rotate_secret(SecretId=resource)
+        except Exception as exp:
+            exception_type, exception_value, exception_traceback = sys.exc_info()
+            traceback_string = traceback.format_exception(exception_type, exception_value, exception_traceback)
+            err_msg = json.dumps({
+                "errorType": exception_type.__name__,
+                "errorMessage": str(exception_value),
+                "stackTrace": traceback_string
+            })
+            logger.error(err_msg)
+            return
+
+        logger.info(f"rotated: {resource}")

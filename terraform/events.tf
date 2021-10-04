@@ -6,7 +6,7 @@ resource "aws_cloudwatch_event_rule" "scope_change" {
 {
   "source": ["aws.tag"],
   "detail-type": ["Tag Change on Resource"],
-  "resources": ["arn:aws:secretsmanager:${local.aws_region_name}:${local.aws_account_id}:secret:"],
+  "resources": ["arn:aws:secretsmanager:${local.aws_region_name}:${local.aws_account_id}:secret:*"],
   "detail": {
     "changed-tag-keys": [ "scope_hash" ]
   }
@@ -46,7 +46,7 @@ module "scope_change" {
   version = "2.17.0"
 
   function_name = "${var.site}-${local.component_name}-scope-change"
-  description   = "tag s3 files based on there timestamp"
+  description   = "Rotate commercetools token when scope hash changes"
   handler       = "main.handler"
   runtime       = "python3.8"
   memory_size   = 128
