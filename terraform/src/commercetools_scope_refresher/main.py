@@ -36,10 +36,14 @@ def handle(event, context):
     }
     """
     logger.info(f"event: {event}")
-
+    region = event["region"]
+    account = event["account"]
     for resource in event["resources"]:
-        logger.info(f"rotating resource: {resource}")
+        if not resource.startswith(f"arn:aws:secretsmanager:{region}:{account}:secret:"):
+            logger.info(f"invalid target resource: {resource}")
+            return
 
+        logger.info(f"rotating resource: {resource}")
         try:
             response = client.rotate_secret(SecretId=resource)
         except Exception as exp:
