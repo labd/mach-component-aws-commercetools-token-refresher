@@ -35,7 +35,7 @@ def handle(event, context):
         }
     }
     """
-    logger.info(f'event: {event}')
+    logger.info(f"event: {event}")
 
     for resource in event["resources"]:
         logger.info(f"rotating resource: {resource}")
@@ -44,12 +44,16 @@ def handle(event, context):
             response = client.rotate_secret(SecretId=resource)
         except Exception as exp:
             exception_type, exception_value, exception_traceback = sys.exc_info()
-            traceback_string = traceback.format_exception(exception_type, exception_value, exception_traceback)
-            err_msg = json.dumps({
-                "errorType": exception_type.__name__,
-                "errorMessage": str(exception_value),
-                "stackTrace": traceback_string
-            })
+            traceback_string = traceback.format_exception(
+                exception_type, exception_value, exception_traceback
+            )
+            err_msg = json.dumps(
+                {
+                    "errorType": exception_type.__name__,
+                    "errorMessage": str(exception_value),
+                    "stackTrace": traceback_string,
+                }
+            )
             logger.error(err_msg)
             return
 
