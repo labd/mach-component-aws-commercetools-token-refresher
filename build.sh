@@ -1,7 +1,7 @@
 #!/bin/bash
 
 VERSION=$(git rev-parse --short HEAD 2>/dev/null || echo "dev" )
-TAGS=$(git tag)
+TAGS=$(git describe --tags --abbrev=0 --exact-match 2> /dev/null)
 BASENAME=commercetools_token_refresher
 
 artifact () {
