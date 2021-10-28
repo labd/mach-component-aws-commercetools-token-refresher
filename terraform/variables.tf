@@ -17,7 +17,7 @@ variable "site" {
 variable "tags" {
   type        = map(string)
   description = "Tags to be used on resources."
-  default = {}
+  default     = {}
 }
 
 variable "ct_project_key" {
