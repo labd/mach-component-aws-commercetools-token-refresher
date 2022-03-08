@@ -2,7 +2,6 @@ locals {
   s3_bucket = "public-mach-components-${local.aws_region_name}"
   
   lambda_environment_variables = merge(
-    var.variables,
     {
       COMPONENT_VERSION = var.component_version
       SITE              = var.site
