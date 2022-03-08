@@ -1,3 +1,7 @@
+version 0.3.0 (unreleased)
+--------------------------
+ - Make available in us-east-1
+
 version 0.2.0 (2021-10-28)
 --------------------------
  - Force rotate when scope changes

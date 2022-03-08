@@ -4,6 +4,8 @@ VERSION=$(git rev-parse --short HEAD 2>/dev/null || echo "dev" )
 TAGS=$(git describe --tags --abbrev=0 --exact-match 2> /dev/null)
 BASENAME=commercetools_token_refresher
 
+BUCKETS=("public-mach-components-eu-central-1" "public-mach-components-us-east-1")
+
 artifact () {
     echo "${BASENAME}-$1.zip"
 }
@@ -20,12 +22,16 @@ package () {
 
 upload () {
     src="build/${ARTIFACT_NAME}"
-    echo "Uploading to ${AWS_BUCKET_NAME}"
-    aws s3 cp --acl public-read $src s3://$AWS_BUCKET_NAME/$ARTIFACT_NAME
-    for TAG in $TAGS
+    for BUCKET in ${BUCKETS[@]}
     do
-        echo "Uploading tagged ${TAG}"
-        aws s3 cp --acl public-read $src s3://$AWS_BUCKET_NAME/$(artifact $TAG)
+        echo "Uploading assets to ${BUCKET}..."
+        echo "  - ${ARTIFACT_NAME}"
+        aws s3 cp --acl public-read $src s3://$BUCKET/$ARTIFACT_NAME
+        for TAG in $TAGS
+        do
+            echo "  - $(artifact $TAG)"
+            aws s3 cp --acl public-read $src s3://$BUCKET/$(artifact $TAG)
+        done
     done
 }
 
