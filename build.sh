@@ -4,7 +4,7 @@ VERSION=$(git rev-parse --short HEAD 2>/dev/null || echo "dev" )
 TAGS=$(git describe --tags --abbrev=0 --exact-match 2> /dev/null)
 BASENAME=commercetools_token_refresher
 
-BUCKETS=("public-mach-components" "public-mach-components-us-east")
+BUCKETS=("public-mach-components-eu-central-1" "public-mach-components-us-east-1")
 
 artifact () {
     echo "${BASENAME}-$1.zip"
