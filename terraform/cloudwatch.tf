@@ -1,3 +1,8 @@
+resource "aws_cloudwatch_log_group" "lambda_log_group" {
+  name_prefix       = "/aws/lambda/commercetools_token_refresher"
+  retention_in_days = "30"
+}
+
 resource "aws_cloudwatch_metric_alarm" "lambda_errors" {
   alarm_name          = "${aws_lambda_function.commercetools_token_refresher.function_name}_errors"
   comparison_operator = "GreaterThanOrEqualToThreshold"
