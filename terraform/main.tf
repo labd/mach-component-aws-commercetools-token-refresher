@@ -1,7 +1,5 @@
-data "aws_region" "current" {}
-
 locals {
-  s3_bucket = "public-mach-components-${data.aws_region.current.name}"
+  s3_bucket = "public-mach-components-${local.aws_region_name}"
   
   lambda_environment_variables = merge(
     var.variables,
