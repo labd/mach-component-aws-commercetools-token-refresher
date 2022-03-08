@@ -41,12 +41,13 @@ resource "aws_lambda_function" "commercetools_token_refresher" {
     variables = local.lambda_environment_variables
   }
 
-  # depends_on = [aws_cloudwatch_log_group.lambda_log_group]
+  depends_on = [aws_cloudwatch_log_group.lambda_log_group]
 }
 
 resource "aws_lambda_permission" "rotate_secrets_manager" {
-  statement_id  = "AllowSecretsManagerRotation"
-  action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.commercetools_token_refresher.function_name
-  principal     = "secretsmanager.amazonaws.com"
+  statement_id   = "AllowSecretsManagerRotation"
+  action         = "lambda:InvokeFunction"
+  function_name  = aws_lambda_function.commercetools_token_refresher.function_name
+  principal      = "secretsmanager.amazonaws.com"
+  source_account = local.aws_account_id
 }

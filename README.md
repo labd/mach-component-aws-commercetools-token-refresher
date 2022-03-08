@@ -47,3 +47,37 @@ In your lambda function you can pass the reference to the secretsmanager value a
 ```
 CT_ACCESS_TOKEN_SECRET_NAME = module.ct_secret.name
 ```
+
+### Running in VPC
+
+By providing VPC information through the variables, the rotator lambda can be run within the VPC;
+
+```yaml
+sites:
+  - identifier: some site
+    components:
+    - name: ct-refresher
+      variables:
+        vpc:
+          id: <your-vpc-id>
+          subnet_ids: <your-subnet-ids>
+          ingress_subnet: <your-ingress-subnet>
+```
+
+
+### Adding KMS keys
+
+KMS keys can be provided through the `kms` object;
+
+
+```yaml
+sites:
+  - identifier: some site
+    components:
+    - name: ct-refresher
+      variables:
+        kms:
+          cloudwatch: <cloudwatch-kms-key>
+          lambda: <lambda-kms-key>
+          secretmanager: <secretmanager-kms-key>
+```

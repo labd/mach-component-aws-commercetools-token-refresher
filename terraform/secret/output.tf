@@ -8,5 +8,6 @@ output "client_id" {
 }
 
 output "client_secret" {
-  value = commercetools_api_client.main.secret
+  value     = commercetools_api_client.main.secret
+  sensitive = true
 }
