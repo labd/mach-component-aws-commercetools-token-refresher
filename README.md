@@ -67,7 +67,7 @@ sites:
 
 ### Adding KMS keys
 
-KMS keys can be provided through the `kms` object;
+KMS keys can be provided through the `kms_keys` object;
 
 
 ```yaml
@@ -76,7 +76,7 @@ sites:
     components:
     - name: ct-refresher
       variables:
-        kms:
+        kms_keys:
           cloudwatch: <cloudwatch-kms-key>
           lambda: <lambda-kms-key>
           secretmanager: <secretmanager-kms-key>
