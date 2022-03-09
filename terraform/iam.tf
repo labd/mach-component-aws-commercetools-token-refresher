@@ -14,7 +14,7 @@ data "aws_iam_policy_document" "assume_role" {
 }
 
 resource "aws_iam_role" "lambda" {
-  name               = "commercetools_token_refresher-lambda-role"
+  name               = "commercetools_token_refresher-lambda-role-mach"
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
 }
 
@@ -103,7 +103,7 @@ data "aws_iam_policy_document" "lambda_policy" {
 }
 
 resource "aws_iam_role_policy" "lambda_policy" {
-  name   = "lambda-policy"
+  name   = "lambda-policy-mach"
   role   = aws_iam_role.lambda.id
   policy = data.aws_iam_policy_document.lambda_policy.json
 }
