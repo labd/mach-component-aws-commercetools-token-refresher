@@ -31,7 +31,7 @@ data "aws_iam_policy_document" "lambda_policy" {
     ]
 
     resources = [
-      "arn:aws:secretsmanager:${local.aws_region_name}:${local.aws_account_id}:secret:*/ct-access-token",
+      "arn:aws:secretsmanager:${local.aws_region_name}:${local.aws_account_id}:secret:*/ct-access-token-*",
     ]
 
     condition {
