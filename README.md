@@ -40,6 +40,9 @@ module "ct_secret" {
   name   = "<your-component-name>"
   site   = var.site
   scopes = local.ct_scopes
+
+  # Optional; KMS key to use for the secret
+  kms_key_id = "<your-kms-key-id>"
 }
 ```
 
