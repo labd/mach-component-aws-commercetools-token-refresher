@@ -95,7 +95,7 @@ module "scope_change" {
   memory_size            = 128
   timeout                = 30
   vpc_subnet_ids         = local.subnet_ids
-  vpc_security_group_ids = local.vpc_id != null ? [aws_security_group.lambda[0].id] : null
+  vpc_security_group_ids = local.vpc_id != null ? [aws_security_group.lambda.id] : null
 
   cloudwatch_logs_kms_key_id = local.kms_cloudwatch
   kms_key_arn                = local.kms_lambda
