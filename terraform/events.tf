@@ -125,6 +125,7 @@ resource "aws_security_group" "lambda" {
   vpc_id      = local.vpc_id
 
   egress {
+    description = "Traffic out to VPC"
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
