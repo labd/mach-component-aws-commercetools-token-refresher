@@ -120,7 +120,6 @@ resource "aws_lambda_permission" "allow_cloudwatch" {
 }
 
 resource "aws_security_group" "lambda" {
-  count       = local.vpc_id == null ? 0 : 1
   name        = "${var.site}-${local.component_name}-lambda"
   description = "Group for ${local.component_name} lambda"
   vpc_id      = local.vpc_id
