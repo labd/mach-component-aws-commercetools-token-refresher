@@ -74,11 +74,8 @@ data "aws_iam_policy_document" "scope_change" {
         "ec2:DeleteNetworkInterface",
       ]
 
-      # TODO: we could scope back subnet to deployed vpc subnets.
       resources = [
-        "arn:aws:ec2:${local.aws_region_name}:${local.aws_account_id}:network-interface/*",
-        "arn:aws:ec2:${local.aws_region_name}:${local.aws_account_id}:security-group/*",
-        "arn:aws:ec2:${local.aws_region_name}:${local.aws_account_id}:subnet/*"
+        "*"
       ]
     }
   }
