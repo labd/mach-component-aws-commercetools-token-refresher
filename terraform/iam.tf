@@ -58,6 +58,7 @@ data "aws_iam_policy_document" "lambda_policy" {
 
     content {
       actions = [
+        "kms:Encrypt",
         "kms:Decrypt",
         "kms:GenerateDataKey"
       ]
