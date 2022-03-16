@@ -54,7 +54,7 @@ data "aws_iam_policy_document" "lambda_policy" {
 
   # KMS manager
   dynamic "statement" {
-    for_each = local.kms_secretmanager == null ? [] : [1]
+    for_each = local.kms_secretsmanager == null ? [] : [1]
 
     content {
       actions = [
@@ -64,7 +64,7 @@ data "aws_iam_policy_document" "lambda_policy" {
       ]
 
       resources = [
-        local.kms_secretmanager,
+        local.kms_secretsmanager,
       ]
     }
   }
