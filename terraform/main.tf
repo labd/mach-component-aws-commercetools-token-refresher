@@ -50,7 +50,8 @@ resource "aws_lambda_function" "commercetools_token_refresher" {
   }
 
   depends_on = [
-    aws_cloudwatch_log_group.lambda_log_group
+    aws_cloudwatch_log_group.lambda_log_group,
+    aws_iam_role_policy.lambda_policy
   ]
 }
 
