@@ -40,6 +40,15 @@ resource "aws_lambda_function" "commercetools_token_refresher" {
     variables = local.lambda_environment_variables
   }
 
+  dynamic "vpc_config" {
+    for_each           = local.vpc_id == null ? []: [1]
+
+    content {
+      subnet_ids         = local.subnet_ids
+      security_group_ids = [aws_security_group.lambda.id]
+    }
+  }
+
   depends_on = [aws_cloudwatch_log_group.lambda_log_group]
 }
 
