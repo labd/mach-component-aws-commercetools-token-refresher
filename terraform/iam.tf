@@ -34,11 +34,11 @@ data "aws_iam_policy_document" "lambda_policy" {
       "arn:aws:secretsmanager:${local.aws_region_name}:${local.aws_account_id}:secret:*/ct-access-token-*",
     ]
 
-    condition {
-      test     = "ArnEquals"
-      variable = "secretsmanager:resource/AllowRotationLambdaArn"
-      values   = [aws_lambda_function.commercetools_token_refresher.arn]
-    }
+    # condition {
+    #   test     = "ArnEquals"
+    #   variable = "secretsmanager:resource/AllowRotationLambdaArn"
+    #   values   = [aws_lambda_function.commercetools_token_refresher.arn]
+    # }
   }
 
   # Secrets manager containing commercetools client key
