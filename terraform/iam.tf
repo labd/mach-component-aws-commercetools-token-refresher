@@ -13,8 +13,12 @@ data "aws_iam_policy_document" "assume_role" {
   }
 }
 
+locals {
+  lambda_role_name = "${var.site}-${local.component_name}-lambda-role-mach"
+}
+
 resource "aws_iam_role" "lambda" {
-  name               = "${var.site}-${local.component_name}-lambda-role-mach"
+  name               = local.lambda_role_name
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
 }
 
@@ -105,7 +109,7 @@ data "aws_iam_policy_document" "lambda_policy" {
 }
 
 resource "aws_iam_role_policy" "lambda_policy" {
-  name   = "lambda-policy-mach"
+  name   = local.lambda_role_name
   role   = aws_iam_role.lambda.id
   policy = data.aws_iam_policy_document.lambda_policy.json
 }
