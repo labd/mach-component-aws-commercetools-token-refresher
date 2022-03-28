@@ -95,9 +95,10 @@ data "aws_iam_policy_document" "lambda_policy" {
 
       # TODO: we could scope back subnet to deployed vpc subnets.
       resources = [
-        "arn:aws:ec2:${local.aws_region_name}:${local.aws_account_id}:network-interface/*",
-        "arn:aws:ec2:${local.aws_region_name}:${local.aws_account_id}:security-group/*",
-        "arn:aws:ec2:${local.aws_region_name}:${local.aws_account_id}:subnet/*"
+        "*"
+        # "arn:aws:ec2:${local.aws_region_name}:${local.aws_account_id}:network-interface/*",
+        # "arn:aws:ec2:${local.aws_region_name}:${local.aws_account_id}:security-group/*",
+        # "arn:aws:ec2:${local.aws_region_name}:${local.aws_account_id}:subnet/*"
       ]
     }
   }
