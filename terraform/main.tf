@@ -22,7 +22,7 @@ locals {
 }
 
 resource "aws_lambda_function" "commercetools_token_refresher" {
-  function_name = "${var.site}-${local.component_name}"
+  function_name = lambda_name
   role          = aws_iam_role.lambda.arn
   handler       = "handler.handle"
 
@@ -41,7 +41,7 @@ resource "aws_lambda_function" "commercetools_token_refresher" {
     variables = local.lambda_environment_variables
   }
 
-  # depends_on = [aws_cloudwatch_log_group.lambda_log_group]
+  depends_on = [aws_cloudwatch_log_group.lambda_log_group]
 }
 
 resource "aws_lambda_permission" "rotate_secrets_manager" {
