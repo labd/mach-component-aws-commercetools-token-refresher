@@ -22,7 +22,7 @@ locals {
 }
 
 resource "aws_lambda_function" "commercetools_token_refresher" {
-  function_name = lambda_name
+  function_name = local.lambda_name
   role          = aws_iam_role.lambda.arn
   handler       = "handler.handle"
 
