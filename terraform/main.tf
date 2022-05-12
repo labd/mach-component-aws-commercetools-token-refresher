@@ -45,7 +45,7 @@ resource "aws_lambda_function" "commercetools_token_refresher" {
 
     content {
       subnet_ids         = local.subnet_ids
-      security_group_ids = [aws_security_group.lambda.id]
+      security_group_ids = [aws_security_group.lambda.0.id]
     }
   }
 
