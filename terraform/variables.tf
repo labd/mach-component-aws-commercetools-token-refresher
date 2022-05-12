@@ -44,7 +44,7 @@ variable "ct_stores" {
 }
 
 variable "variables" {
-  type        = map(string)
+  type        = any
   description = "Generic way to pass variables to components. Some of these can also be used as environment variables."
 }
 

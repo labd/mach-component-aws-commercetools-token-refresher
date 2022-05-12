@@ -1,8 +1,7 @@
 locals {
   s3_bucket = "public-mach-components-${local.aws_region_name}"
-  
+
   lambda_environment_variables = merge(
-    var.variables,
     {
       COMPONENT_VERSION = var.component_version
       SITE              = var.site
@@ -41,12 +40,25 @@ resource "aws_lambda_function" "commercetools_token_refresher" {
     variables = local.lambda_environment_variables
   }
 
-  depends_on = [aws_cloudwatch_log_group.lambda_log_group]
+  dynamic "vpc_config" {
+    for_each           = local.vpc_id == null ? []: [1]
+
+    content {
+      subnet_ids         = local.subnet_ids
+      security_group_ids = [aws_security_group.lambda.0.id]
+    }
+  }
+
+  depends_on = [
+    aws_cloudwatch_log_group.lambda_log_group,
+    aws_iam_role_policy.lambda_policy,
+  ]
 }
 
 resource "aws_lambda_permission" "rotate_secrets_manager" {
-  statement_id  = "AllowSecretsManagerRotation"
-  action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.commercetools_token_refresher.function_name
-  principal     = "secretsmanager.amazonaws.com"
+  statement_id   = "AllowSecretsManagerRotation"
+  action         = "lambda:InvokeFunction"
+  function_name  = aws_lambda_function.commercetools_token_refresher.function_name
+  principal      = "secretsmanager.amazonaws.com"
+  source_account = local.aws_account_id
 }

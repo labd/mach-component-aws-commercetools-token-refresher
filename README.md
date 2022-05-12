@@ -40,10 +40,47 @@ module "ct_secret" {
   name   = "<your-component-name>"
   site   = var.site
   scopes = local.ct_scopes
+
+  # Optional; KMS key to use for the secret
+  kms_key_id = "<your-kms-key-id>"
 }
 ```
 
 In your lambda function you can pass the reference to the secretsmanager value as
 ```
 CT_ACCESS_TOKEN_SECRET_NAME = module.ct_secret.name
+```
+
+### Running in VPC
+
+By providing VPC information through the variables, the rotator lambda can be run within the VPC;
+
+```yaml
+sites:
+  - identifier: some site
+    components:
+    - name: ct-refresher
+      variables:
+        vpc:
+          id: <your-vpc-id>
+          subnet_ids: <your-subnet-ids>
+          ingress_subnet: <your-ingress-subnet>
+```
+
+
+### Adding KMS keys
+
+KMS keys can be provided through the `kms_keys` object;
+
+
+```yaml
+sites:
+  - identifier: some site
+    components:
+    - name: ct-refresher
+      variables:
+        kms_keys:
+          cloudwatch: <cloudwatch-kms-key>
+          lambda: <lambda-kms-key>
+          secretmanager: <secretmanager-kms-key>
 ```
