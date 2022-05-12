@@ -1,5 +1,5 @@
 resource "aws_cloudwatch_log_group" "lambda_log_group" {
-  name_prefix       = "/aws/lambda/commercetools_token_refresher"
+  name              = "/aws/lambda/${local.lambda_name}"
   retention_in_days = "30"
   kms_key_id        = local.kms_cloudwatch
 }
