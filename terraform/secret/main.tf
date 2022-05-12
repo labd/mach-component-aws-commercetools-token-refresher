@@ -11,7 +11,7 @@ data "aws_lambda_function" "commercetools_token_refresher" {
 }
 
 resource "aws_secretsmanager_secret" "commercetools_client" {
-  # WARNING: iam policy refefrences "/commercetools-client" to grant access
+  # WARNING: iam policy references "/commercetools-client" to grant access
   name       = "${var.name}/commercetools-client"
   kms_key_id = var.kms_key_id
 }
@@ -22,7 +22,7 @@ resource "aws_secretsmanager_secret_version" "commercetools_client" {
 }
 
 resource "aws_secretsmanager_secret" "ct_access_token" {
-  # WARNING: iam policy refefrences "/ct-access-token" to grant access
+  # WARNING: iam policy references "/ct-access-token" to grant access
   name       = "${var.name}/ct-access-token"
   kms_key_id = var.kms_key_id
 
