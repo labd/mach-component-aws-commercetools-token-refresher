@@ -1,4 +1,4 @@
-version 0.3.0 (unreleased)
+version 0.3.0 (2022-06-29)
 --------------------------
  - Add VPC support
  - Add custom KMS key support
