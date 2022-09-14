@@ -1,4 +1,4 @@
-version 0.3.1 (unreleased)
+version 0.3.1 (2022-09-14)
 --------------------------
  - Add permission for scope-change lambda function to perform RotateSecret (#13)
 
