@@ -1,3 +1,8 @@
+version 0.3.1 (unreleased)
+--------------------------
+ - Add permission for scope-change lambda function to perform RotateSecret (#13)
+
+
 version 0.3.0 (2022-06-29)
 --------------------------
  - Add VPC support

@@ -35,7 +35,10 @@ data "aws_iam_policy_document" "scope_change" {
     condition {
       test     = "ArnEquals"
       variable = "secretsmanager:RotateSecret"
-      values   = [aws_lambda_function.commercetools_token_refresher.arn]
+      values   = [
+        aws_lambda_function.commercetools_token_refresher.arn,
+        module.scope_change.lambda_function_arn,
+      ]
     }
   }
   statement {
