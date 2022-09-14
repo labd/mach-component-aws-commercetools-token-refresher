@@ -1,4 +1,4 @@
-version 0.3.1 (unreleased)
+version 0.3.2 (2022-09-14)
 --------------------------
  - Remove too restrictive IAM policy condition which prevented scope-change trigger to rotate the token
 

@@ -20,7 +20,7 @@ with open("README.md") as fh:
 
 setup(
     name="commercetools_token_refresher",
-    version="0.3.1",
+    version="0.3.2",
     description="commercetools token secrets manager refresher",
     long_description=long_description,
     author="Lab Digital B.V.",
