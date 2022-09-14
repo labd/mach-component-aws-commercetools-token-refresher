@@ -1,3 +1,8 @@
+version 0.3.1 (unreleased)
+--------------------------
+ - Remove too restrictive IAM policy condition which prevented scope-change trigger to rotate the token
+
+
 version 0.3.1 (2022-09-14)
 --------------------------
  - Add permission for scope-change lambda function to perform RotateSecret (#13)
