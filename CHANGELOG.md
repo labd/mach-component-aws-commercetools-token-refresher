@@ -1,3 +1,8 @@
+version 0.3.3 (2023-02-02)
+--------------------------
+ - Security fix: updated certifi and urllib3 packages
+
+
 version 0.3.2 (2022-09-14)
 --------------------------
  - Remove too restrictive IAM policy condition which prevented scope-change trigger to rotate the token
