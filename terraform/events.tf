@@ -100,6 +100,13 @@ module "scope_change" {
   role_name          = "${var.site}-${local.component_name}-scope-change-mach"
 
   cloudwatch_logs_retention_in_days = 30
+
+  # Set the hash_extra explitly as a work-around for an issue in the 'external'
+  # data source.
+  # More info about this:
+  # - https://github.com/terraform-aws-modules/terraform-aws-lambda/issues/430
+  # - https://github.com/hashicorp/terraform-provider-external/issues/193
+  hash_extra = "token-refresher"
 }
 
 resource "aws_lambda_permission" "allow_cloudwatch" {
