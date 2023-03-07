@@ -1,3 +1,8 @@
+version 0.3.4 (2023-03-07)
+--------------------------
+ - Fix: resolve python `NoneType` issue with scope_change deployment
+
+
 version 0.3.3 (2023-02-02)
 --------------------------
  - Security fix: updated certifi and urllib3 packages
