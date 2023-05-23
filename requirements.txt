@@ -8,7 +8,7 @@ certifi==2022.12.7
     # via
     #   requests
     #   sentry-sdk
-chardet==3.0.4
+charset-normalizer==3.1.0
     # via requests
 idna==2.9
     # via requests
@@ -18,7 +18,7 @@ jmespath==0.10.0
     #   botocore
 python-dateutil==2.8.1
     # via botocore
-requests==2.25.0
+requests==2.31.0
     # via -r requirements.in
 s3transfer==0.3.3
     # via boto3
