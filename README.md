@@ -1,7 +1,9 @@
-# Commercetools token refresher component
+# Commercetools token refresher for AWS
 
 Refresh Commercetools access token secrets by asking for a new token. 10 minutes after initial token request the Commercetools API returns a new token.
 They both still work until their expiry date.
+
+This component is for AWS, there is also a [GCP version](https://github.com/mach-composer/mach-component-gcp-commercetools-token-refresher)
 
 ## Usage
 
